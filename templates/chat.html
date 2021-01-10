@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat with {{ username }}</title>
+</head>
+<body>
+    <p>Welcome, {{ user_name }}</p>
+
+    <form method="POST">
+        <textarea rows="4" cols="50" name="message" id="message"></textarea><br>
+        <button>Send Message</button>
+    </form>
+
+    <br>
+    <hr>
+
+    {% for message in chat_messages %}
+        <p>({{ message.timestamp }}) {{ message.name }} : {{ message.message }}</p>
+    {% endfor %}
+
+    <script>
+        let textBox = document.getElementById("message");
+        let timer = setTimeout(function(){
+            location.reload()
+        }, 5000);
+        
+        textBox.onkeydown = function(e){
+            clearTimeout(timer);
+            let timer = setTimeout(function(){
+                location.reload()
+        }, 5000);
+        }
+    </script>
+</body>
+</html>
