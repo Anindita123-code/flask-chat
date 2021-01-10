@@ -4,7 +4,7 @@ from flask import Flask, redirect, render_template, request, session, url_for
 
 
 app = Flask(__name__)   # initialize our new flask application
-app.secret_key = "mySecretKey"
+app.secret_key = os.getenv("SECRET", "mySecretKey")
 messages = []
 
 
@@ -40,11 +40,12 @@ def user(username):
                            chat_messages=messages)
 
 
-@app.route('/<username>/<message>')
-def send_message(username, message):
-    """ Create a new message and redirect to the chat page"""
-    add_messages(username, message)
-    return redirect("/" + username)
+# @app.route('/<username>/<message>')
+# def send_message(username, message):
+#     """ Create a new message and redirect to the chat page"""
+#     add_messages(username, message)
+#     return redirect("/" + username)
 
 
-app.run(host=os.getenv("IP"), port=int(os.getenv("PORT")), debug=True)
+app.run(host=os.getenv("IP", "0.0.0.0"), 
+    port=int(os.getenv("PORT", "5000")), debug=False)
